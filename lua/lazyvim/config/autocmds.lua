@@ -124,3 +124,13 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+-- File: init.lua
+vim.api.nvim_create_autocmd("InsertLeave", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.modified and vim.fn.empty(vim.fn.expand("%:t")) ~= 1 then
+      vim.cmd("silent! write")
+    end
+  end,
+})
